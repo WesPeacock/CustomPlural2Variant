@@ -41,6 +41,13 @@ perl -pE 's/\\lx (.*?#)(\\z0 )(.*)/\\lx $3\\mn $1\\flg Has_plural#/'
 perl -pf de_opl.pl >earBay-etc-variants.db
 ```
 
+#### The Referring FLEx list thread
+A posting on the FLEx-list provides some context to this repo:
+
+<https://groups.google.com/g/flex-list/c/Mclifw99OVE/m/176_lR0tAwAJ>
+
+Note that it addresses the issue that Jeff Heath raised, not the original one raised by
+Bart Eenkhoorn.
 
 #### About this Document
 
