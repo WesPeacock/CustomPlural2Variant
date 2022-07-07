@@ -17,26 +17,27 @@ The files  in the repo are:
 ```bash
 grep -P '\\(lx|hm|z0) ' earBay-etc.db |perl -pf opl.pl |grep '\\z0 ' |perl -pE 's/#\\hm //;' |perl -pE 's/\\lx (.*?#)(\\z0 )(.*)/\\lx $3\\mn $1\\flg Has_plural#/' |perl -pf de_opl.pl >earBay-etc-variants.db
 ```
-Here's how the one-liner breaks down:
+Here's how the above one-liner breaks down (comments about each piece precede the line):
 
 ```bash
 # select just the lexeme, homograph# and custom plural
-grep -P '\\(lx|hm|z0) ' earBay-etc.db
+grep -P '\\(lx|hm|z0) ' earBay-etc.db |\
 # change:
 # \lx earbay
 # \hm 1
 # \z0 bearsbay
 # to
 # \lx earbay#\hm 1#\z0 bearsbay#
-perl -pf opl.pl
-# ignore files without a custom plural field
-grep '\\z0 '
-# attach homograph# to the lexeme
+perl -pf opl.pl |\
+# ignore records without custom plural fields
+grep '\\z0 ' |\
+# attach the homograph# to the lexeme, i.e.,
 # \lx earbay#\hm 1# -> \lx earbay1#
-perl -pE 's/#\\hm //;'
+perl -pE 's/#\\hm //;' |\
 # make the custom plural the new lexeme
-# make the old lexeme a \mn and add a \flg field
-perl -pE 's/\\lx (.*?#)(\\z0 )(.*)/\\lx $3\\mn $1\\flg Has_plural#/'
+# make the old lexeme a \mn
+# and add a \flg field
+perl -pE 's/\\lx (.*?#)(\\z0 )(.*)/\\lx $3\\mn $1\\flg Has_plural#/' |\
 #undo the one-per-line
 perl -pf de_opl.pl >earBay-etc-variants.db
 ```
